@@ -14,6 +14,10 @@ public class DogWarrior : Player
     public GameObject Info;
     public GameObject Bar;
     public GameObject click;
+
+    private Vector3 namePos = new Vector3(0f, 100f, 0f);
+    private Vector3 BarPos = new Vector3(0f, 80f, 0f);
+    private Camera mainCamera;
     private void Awake()
     {
         InitPlayer();
@@ -22,6 +26,7 @@ public class DogWarrior : Player
     {
         InputManager.Instance.KeyAction -= OnKeyBoard;
         InputManager.Instance.KeyAction += OnKeyBoard;
+        mainCamera = FindObjectOfType<Camera>();
     }
     public override void InitPlayer()
     {
@@ -30,10 +35,12 @@ public class DogWarrior : Player
         NormalDamage = 5f;
         rigidBody = GetComponent<Rigidbody>();
     }
-    private void Update()
+    private void FixedUpdate()
     {
-        Info.transform.position = Camera.main.WorldToScreenPoint(transform.position) + new Vector3(0f, 90f, 0f);
-        Bar.transform.position = Camera.main.WorldToScreenPoint(transform.position) + new Vector3(0f, 70f, 0f);
+        Info.transform.position = mainCamera.WorldToScreenPoint(transform.position) + namePos;
+        Bar.transform.position = mainCamera.WorldToScreenPoint(transform.position) + BarPos;
+        //Info.transform.position = Camera.main.WorldToScreenPoint(transform.position) + new Vector3(0f, 90f, 0f);
+        //Bar.transform.position = Camera.main.WorldToScreenPoint(transform.position) + new Vector3(0f, 70f, 0f);
     }
     public override void OnKeyBoard()
     {

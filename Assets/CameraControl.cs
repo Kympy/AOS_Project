@@ -6,14 +6,16 @@ public class CameraControl : MonoBehaviour
 {
     private Player CurrentPlayer;
     private Vector3 CameraPos;
+    private Vector3 desiredPos;
     private void Awake()
     {
         CurrentPlayer = GameObject.FindObjectOfType<Player>();
-        CameraPos = new Vector3(CurrentPlayer.transform.position.x + 2.55f, transform.position.y, CurrentPlayer.transform.position.z - 2.55f);
+        CameraPos = new Vector3(CurrentPlayer.transform.position.x + 3f, transform.position.y, CurrentPlayer.transform.position.z - 3f);
     }
     private void Update()
     {
-        CameraPos = new Vector3(CurrentPlayer.transform.position.x + 2.55f, transform.position.y, CurrentPlayer.transform.position.z - 2.55f);
-        transform.position = CameraPos;
+        //CameraPos = new Vector3(CurrentPlayer.transform.position.x + 3f, transform.position.y, CurrentPlayer.transform.position.z - 3f);
+        //transform.position = CameraPos;
+        transform.position = new Vector3(CurrentPlayer.transform.position.x + 3f, transform.position.y, CurrentPlayer.transform.position.z - 3f);
     }
 }
