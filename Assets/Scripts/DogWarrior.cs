@@ -7,17 +7,11 @@ public class DogWarrior : Player
 {
     private Vector3 desiredPos;
     private Vector3 desiredDir;
-    private Rigidbody rigidBody;
+    //private Rigidbody rigidBody;
     private Ray mouseRay;
     private RaycastHit hit;
-
-    public GameObject Info;
-    public GameObject Bar;
     public GameObject click;
 
-    private Vector3 namePos = new Vector3(0f, 100f, 0f);
-    private Vector3 BarPos = new Vector3(0f, 80f, 0f);
-    private Camera mainCamera;
     private void Awake()
     {
         InitPlayer();
@@ -26,25 +20,24 @@ public class DogWarrior : Player
     {
         InputManager.Instance.KeyAction -= OnKeyBoard;
         InputManager.Instance.KeyAction += OnKeyBoard;
-        mainCamera = FindObjectOfType<Camera>();
+        desiredPos = transform.position;
     }
     public override void InitPlayer()
     {
         HP = 550f;
+        MaxHP = HP;
+        MP = 200f;
+        MaxMP = MP;
         Speed = 3f;
         NormalDamage = 5f;
-        rigidBody = GetComponent<Rigidbody>();
+        //rigidBody = GetComponent<Rigidbody>();
     }
-    private void FixedUpdate()
+    private void Update()
     {
-        Info.transform.position = mainCamera.WorldToScreenPoint(transform.position) + namePos;
-        Bar.transform.position = mainCamera.WorldToScreenPoint(transform.position) + BarPos;
-        //Info.transform.position = Camera.main.WorldToScreenPoint(transform.position) + new Vector3(0f, 90f, 0f);
-        //Bar.transform.position = Camera.main.WorldToScreenPoint(transform.position) + new Vector3(0f, 70f, 0f);
+        PlayerPos = transform.position;
     }
     public override void OnKeyBoard()
     {
-        
         if (Input.GetMouseButton(1))
         {
             MoveByClick();
@@ -56,7 +49,7 @@ public class DogWarrior : Player
 
     }
 
-    public void MoveByClick()
+    public override void MoveByClick()
     {
         mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(mouseRay, out hit))
@@ -67,7 +60,7 @@ public class DogWarrior : Player
             if (Input.GetMouseButtonDown(1)) Instantiate(click, hit.point, transform.rotation);
         }
     }
-    public void Movement()
+    public override void Movement()
     {
         if (transform.position != desiredPos) // 이동
         {
